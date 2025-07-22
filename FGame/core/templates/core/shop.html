@@ -1,0 +1,51 @@
+{% extends 'core/base.html' %}
+{% load custom_filters %}
+{% block title %}Shop{% endblock %}
+{% block content %}
+<h2>🛍️ Shop</h2>
+
+{% if message %}
+<div class="alert alert-info">{{ message }}</div>
+{% endif %}
+
+<h4>🛠 Buy Tools</h4>
+<form method="post">
+  {% csrf_token %}
+  <table class="table table-bordered">
+    <tr><th>Tool</th><th>Power</th><th>Cost</th><th>Action</th></tr>
+    {% for tool in tools %}
+    <tr>
+      <td>{{ tool.name }}</td>
+      <td>{{ tool.power }}</td>
+      <td>{{ tool.cost }}</td>
+      <td>
+        <button class="btn btn-sm btn-success" name="buy_tool" value="{{ tool.id }}">Buy</button>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</form>
+
+<h4>💰 Sell Resources</h4>
+<form method="post">
+  {% csrf_token %}
+  <table class="table table-bordered">
+    <tr><th>Resource</th><th>Quantity</th><th>Value per unit</th><th>Total</th><th>Action</th></tr>
+    {% for item in inventory %}
+      {% if item.quantity > 0 %}
+      <tr>
+        <td>{{ item.resource.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.resource.value }}</td>
+        <td>{{ item.quantity|multiply:item.resource.value }}</td>
+        <td>
+          <button class="btn btn-sm btn-danger" name="sell_resource" value="{{ item.id }}">Sell All</button>
+        </td>
+      </tr>
+      {% endif %}
+    {% empty %}
+      <tr><td colspan="5">No resources to sell.</td></tr>
+    {% endfor %}
+  </table>
+</form>
+{% endblock %}

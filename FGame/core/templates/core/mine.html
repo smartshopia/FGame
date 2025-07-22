@@ -1,0 +1,18 @@
+{% extends 'core/base.html' %}
+{% block title %}Mine{% endblock %}
+{% block content %}
+<h2>⛏️ Mining Zone</h2>
+
+{% if message %}
+<div class="alert alert-info">{{ message }}</div>
+{% endif %}
+
+{% if can_mine %}
+  <form method="post">
+    {% csrf_token %}
+    <button class="btn btn-primary">Mine Now</button>
+  </form>
+{% else %}
+  <p>You must wait until: <strong>{{ cooldown_time|date:"H:i:s" }}</strong></p>
+{% endif %}
+{% endblock %}

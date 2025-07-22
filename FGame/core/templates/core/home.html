@@ -1,0 +1,13 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h2>🎮 Welcome to the Game Portal!</h2>
+
+{% if user.is_authenticated %}
+    <p>Hello <strong>{{ user.username }}</strong>! Ready to play?</p>
+{% else %}
+    <p>Please log in to start playing!</p>
+{% endif %}
+{% endblock %}
