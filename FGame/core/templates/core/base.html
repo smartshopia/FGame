@@ -25,7 +25,7 @@
     <div class="collapse navbar-collapse" id="navbarContent">
         <ul class="navbar-nav me-auto">
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'games' %}">Games</a>
+                <a class="nav-link" href="{% url 'mine' %}">Games</a>
             </li>
         </ul>
 
@@ -39,12 +39,12 @@
                     {% if user.profile.image %}
                         <img src="{{ user.profile.image.url }}" alt="Profile" class="navbar-profile-img">
                     {% else %}
-                        <img src="{% static 'images/default-profile.png' %}" alt="Default" class="navbar-profile-img">
+                        <img src="{% static 'images/default_profile.png' %}" alt="Default" class="navbar-profile-img">
                     {% endif %}
                     {{ user.username }}
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="{% url 'edit_profile' %}">Edit Profile</a></li>
+                    <li><a class="dropdown-item" href="#">Edit Profile</a></li>
                     <li><a class="dropdown-item" href="{% url 'leaderboard' %}">Leaderboard</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li>

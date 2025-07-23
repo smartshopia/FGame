@@ -3,9 +3,12 @@ from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 from datetime import timedelta
 
+
+def user_profile_pic_path(instance, filename):
+    return f'profile_pics/user_{instance.user.id}/{filename}'
 # Create your models here.
 class User(AbstractUser):
-    image = models.ImageField(upload_to='profile_pics/', default='default-profile.png')
+    profile_pic = models.ImageField(upload_to=user_profile_pic_path, blank=True, null=True)
     xp = models.PositiveIntegerField(default=0)
     level = models.PositiveIntegerField(default=1)
     coins = models.PositiveIntegerField(default=0)
@@ -20,6 +23,16 @@ class User(AbstractUser):
 
     def calculate_level(self):
         return (self.xp // 100) + 1
+    
+    def get_profile_pic_url(self):
+        if self.profile_pic:
+            return self.profile_pic.url
+        if self.gender == 'male':
+            return '/media/default_profile_male.png'
+        elif self.gender == 'female':
+            return '/media/default_profile_female.png'
+        else:
+            return '/media/default_profile.png'
 
 # Resources (e.g., Gold, Iron, Gems)
 class Resource(models.Model):
